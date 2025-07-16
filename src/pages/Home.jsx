@@ -242,7 +242,7 @@ const Home = () => {
                     <span className="text-lg md:text-xl">🎓</span>
                   </div>
                   <div>
-                    <span className="font-black text-amber-900 text-sm md:text-base">Jurusan:</span>
+                    <span className="font-black text-amber-900 text-sm md:text-base">Program Studi:</span>
                     <span className="ml-2 font-bold text-sm md:text-base">Teknik Informatika</span>
                   </div>
                 </div>
@@ -251,7 +251,7 @@ const Home = () => {
                     <span className="text-lg md:text-xl">📅</span>
                   </div>
                   <div>
-                    <span className="font-black text-amber-900 text-sm md:text-base">Taun:</span>
+                    <span className="font-black text-amber-900 text-sm md:text-base">Taun Dijieun:</span>
                     <span className="ml-2 font-bold text-sm md:text-base">2025</span>
                   </div>
                 </div>
