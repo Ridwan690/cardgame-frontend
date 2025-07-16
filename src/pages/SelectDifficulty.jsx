@@ -379,6 +379,12 @@ const SelectDifficulty = () => {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 bg-opacity-95 backdrop-blur-sm p-4 md:p-5 rounded-xl md:rounded-2xl shadow-2xl w-full max-w-sm md:max-w-md border-2 md:border-3 border-amber-500 relative max-h-[85vh] overflow-y-auto">
+            <button
+              onClick={handleBackToHome}
+              className="absolute top-2 right-2 md:top-3 md:right-3 bg-gradient-to-br from-amber-600 to-orange-700 hover:from-amber-700 hover:to-orange-800 text-white font-black w-6 h-6 md:w-8 md:h-8 rounded-full shadow-lg border-2 border-yellow-400 hover:scale-110 transform transition-all duration-300 flex items-center justify-center text-xs md:text-sm"
+            >
+              ✕
+            </button>
             <div className="text-center mb-4 select-none pointer-events-none">
               <div className="bg-gradient-to-br from-amber-300 to-orange-300 w-14 h-14 md:w-16 md:h-16 rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-2 border-yellow-400">
                 <span className="text-2xl md:text-3xl animate-bounce">👤</span>

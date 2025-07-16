@@ -266,7 +266,12 @@ const Game = () => {
   }, [matched, totalPairs]);
 
   const handleClick = (index) => {
+    // Check if game is over, card is already flipped, or card is already matched
     if (flipped.length === 2 || flipped.includes(index) || showResult) return;
+    
+    // Additional check: if this specific card is already matched, don't allow click
+    const currentCard = cards[index];
+    if (matched.includes(currentCard.id_kartu)) return;
 
     playSound('cardFlip'); // Play flip sound
 
