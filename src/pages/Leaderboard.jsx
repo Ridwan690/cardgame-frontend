@@ -283,28 +283,27 @@ const Leaderboard = () => {
       <div className="absolute inset-2 md:inset-4 border-4 md:border-8 border-amber-600 rounded-2xl md:rounded-3xl opacity-20 pointer-events-none"></div>
       <div className="absolute inset-3 md:inset-6 border-2 md:border-4 border-orange-500 rounded-xl md:rounded-2xl opacity-30 pointer-events-none"></div>
 
-      <div className="max-w-4xl mx-auto text-center relative z-10 px-2">
+      <div className="max-w-4xl mx-auto text-center relative z-10 px-1 md:px-2">
         {/* Header - matching Home style */}
-        <div className="mb-6 md:mb-8 relative">
-          <div className={`mb-6 ${bounceAnimation ? 'animate-bounce' : ''}`}>
-            <div className="bg-gradient-to-br from-amber-300 to-orange-300 w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto flex items-center justify-center shadow-2xl border-4 border-yellow-400 select-none pointer-events-none">
-              <span className="text-5xl md:text-7xl drop-shadow-lg">🏆</span>
+        <div className="mb-4 md:mb-8 relative">
+          <div className={`mb-4 md:mb-6 ${bounceAnimation ? 'animate-bounce' : ''}`}>
+            <div className="bg-gradient-to-br from-amber-300 to-orange-300 w-20 h-20 md:w-32 md:h-32 rounded-full mx-auto flex items-center justify-center shadow-2xl border-4 border-yellow-400 select-none pointer-events-none">
+              <span className="text-4xl md:text-7xl drop-shadow-lg">🏆</span>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-amber-600 to-orange-700 text-white px-4 py-3 md:px-6 md:py-4 rounded-2xl md:rounded-3xl shadow-xl border-2 md:border-4 border-yellow-400 select-none pointer-events-none mb-4">
-            <h1 className="text-lg md:text-2xl lg:text-3xl font-black mb-2 drop-shadow-lg">
+          <div className="bg-gradient-to-br from-amber-600 to-orange-700 text-white px-3 py-2 md:px-6 md:py-4 rounded-xl md:rounded-3xl shadow-xl border-2 md:border-4 border-yellow-400 select-none pointer-events-none mb-3 md:mb-4">
+            <h1 className="text-base md:text-2xl lg:text-3xl font-black mb-1 md:mb-2 drop-shadow-lg">
               🎯 DAPTAR JAWARA 🎯
             </h1>
-            <div className="bg-yellow-300 text-amber-800 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-lg inline-block border-2 border-amber-600 font-bold text-sm md:text-base">
+            <div className="bg-yellow-300 text-amber-800 px-2 py-1 md:px-4 md:py-2 rounded-full shadow-lg inline-block border-2 border-amber-600 font-bold text-xs md:text-base">
               ✨ Saha nu pangjawarana dina maén kartu? ✨
             </div>
           </div>
 
-          
           {/* Info sorting */}
-          <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-2xl md:rounded-3xl shadow-xl border-2 md:border-4 border-white mx-auto max-w-2xl mb-4 select-none pointer-events-none">
-            <p className="text-white font-bold text-sm md:text-base">
+          <div className="bg-gradient-to-br from-blue-500 to-purple-500 text-white px-3 py-2 md:px-6 md:py-3 rounded-xl md:rounded-3xl shadow-xl border-2 md:border-4 border-white mx-auto max-w-2xl mb-3 md:mb-4 select-none pointer-events-none">
+            <p className="text-white font-bold text-xs md:text-base">
               📊 Diurutan tina: Skor Pangluhurna → Waktu Panggancangna
               {selectedLevel !== "all" && ` (${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)} wungkul)`}
             </p>
@@ -312,8 +311,8 @@ const Leaderboard = () => {
           
           {/* Show current player info if available */}
           {currentPlayer && (
-            <div className="bg-gradient-to-br from-green-500 to-blue-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-2xl md:rounded-3xl shadow-xl border-2 md:border-4 border-white mx-auto max-w-2xl">
-              <span className="font-bold text-sm md:text-base">👤 {currentPlayer.name}</span>
+            <div className="bg-gradient-to-br from-green-500 to-blue-500 text-white px-3 py-2 md:px-6 md:py-3 rounded-xl md:rounded-3xl shadow-xl border-2 md:border-4 border-white mx-auto max-w-2xl">
+              <span className="font-bold text-xs md:text-base">👤 {currentPlayer.name}</span>
               {playerRank && (
                 <span className="ml-2 font-bold">• Peringkat ke-{playerRank}</span>
               )}
@@ -323,11 +322,11 @@ const Leaderboard = () => {
 
         <FilterButtons />
 
-        {/* Leaderboard Card */}
-        <div className="bg-gradient-to-br from-white to-amber-50 rounded-2xl md:rounded-3xl shadow-xl overflow-hidden border-2 md:border-4 border-amber-500 mb-6 md:mb-8">
-          {/* Header */}
-          <div className="bg-gradient-to-br from-amber-600 to-orange-700 px-4 py-3 md:px-6 md:py-4 sticky top-0 z-10 select-none pointer-events-none">
-            <div className="grid grid-cols-6 gap-2 md:gap-3 text-white font-bold text-xs md:text-sm drop-shadow-md ">
+        {/* Leaderboard Card - Mobile Optimized */}
+        <div className="bg-gradient-to-br from-white to-amber-50 rounded-xl md:rounded-3xl shadow-xl overflow-hidden border-2 md:border-4 border-amber-500 mb-4 md:mb-8">
+          {/* Header - Hidden on mobile, shown on desktop */}
+          <div className="hidden md:block bg-gradient-to-br from-amber-600 to-orange-700 px-4 py-3 md:px-6 md:py-4 sticky top-0 z-10 select-none pointer-events-none">
+            <div className="grid grid-cols-6 gap-2 md:gap-3 text-white font-bold text-xs md:text-sm drop-shadow-md">
               <div className="text-center">🏅 Peringkat</div>
               <div className="col-span-2">👤 Ngaran Murid</div>
               <div className="text-center">🎯 Tingkatan</div>
@@ -337,76 +336,130 @@ const Leaderboard = () => {
           </div>
 
           {/* Scrollable Content Container */}
-          <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-amber-400 scrollbar-track-amber-100">
+          <div className="max-h-96 md:max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-amber-400 scrollbar-track-amber-100">
             <div className="divide-y-2 divide-amber-200 select-none pointer-events-none">
               {loading ? (
-                <div className="p-6 md:p-8 text-center">
-                  <div className="text-4xl md:text-5xl mb-3 animate-bounce">⏳</div>
-                  <p className="text-amber-600 text-lg md:text-xl font-bold">Ngamuat data...</p>
+                <div className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">⏳</div>
+                  <p className="text-amber-600 text-base md:text-xl font-bold">Ngamuat data...</p>
                 </div>
               ) : error ? (
-                <div className="p-6 md:p-8 text-center">
-                  <div className="text-4xl md:text-5xl mb-3 animate-pulse">😵</div>
-                  <p className="text-red-500 text-lg md:text-xl font-bold">{error}</p>
+                <div className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">😵</div>
+                  <p className="text-red-500 text-base md:text-xl font-bold">{error}</p>
                 </div>
               ) : scores.length > 0 ? (
                 scores.map((item, index) => (
-                  <div
-                    key={item.id_leaderboard}
-                    className={`grid grid-cols-6 gap-2 md:gap-3 items-center p-3 md:p-4 transition-all duration-300 rounded-xl md:rounded-2xl mx-2 md:mx-3 my-2 
-                      ${getRankStyle(index)} 
-                      ${isCurrentPlayer(item) ? 'ring-4 ring-blue-400 bg-gradient-to-r from-blue-100 to-purple-100' : ''}
-                    `}
-                  >
-                    {/* Rank */}
-                    <div className="text-center">
-                      <span className="text-xl md:text-2xl font-bold drop-shadow-md">{getRankIcon(index)}</span>
-                      {isCurrentPlayer(item) && (
-                        <div className="text-xs text-blue-600 font-bold mt-1 bg-white px-2 py-1 rounded-full">👈 ANJEUN</div>
-                      )}
-                    </div>
-
-                    {/* Name */}
-                    <div className="col-span-2">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg border-2 border-white">
-                          {(item.LeaderboardSiswa?.username || "?").charAt(0).toUpperCase()}
+                  <div key={item.id_leaderboard} className="p-2 md:p-4 mx-1 md:mx-3 my-1 md:my-2">
+                    {/* Mobile Layout */}
+                    <div className="md:hidden">
+                      <div className={`${getRankStyle(index)} ${isCurrentPlayer(item) ? 'ring-2 ring-blue-400' : ''} rounded-lg p-3 relative`}>
+                        {/* Rank Badge */}
+                        <div className="absolute -top-2 -left-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-amber-500 z-10">
+                          <span className="text-sm font-bold text-amber-800">{getRankIcon(index)}</span>
                         </div>
-                        <div>
-                          <p className="font-bold text-white text-xs md:text-sm drop-shadow-md">
-                            {item.LeaderboardSiswa?.username || "Teu Aya Ngaran"}
-                          </p>
+                        
+                        {/* Current Player Indicator */}
+                        {isCurrentPlayer(item) && (
+                          <div className="absolute -top-2 -right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold z-10">
+                            👈 ANJEUN
+                          </div>
+                        )}
+                        
+                        {/* Player Info */}
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-white">
+                              {(item.LeaderboardSiswa?.username || "?").charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <p className="font-bold text-white text-sm drop-shadow-md">
+                                {item.LeaderboardSiswa?.username || "Teu Aya Ngaran"}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          {/* Level Badge */}
+                          <span className="bg-gradient-to-r from-blue-400 to-green-400 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg border-2 border-white">
+                            {item.level?.nama_level || "?"}
+                          </span>
+                        </div>
+                        
+                        {/* Score and Time */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-1">
+                            <span className="text-xs text-white font-bold">⭐</span>
+                            <span className="bg-gradient-to-r from-green-400 to-blue-400 text-white px-2 py-1 rounded-full font-bold text-xs shadow-lg border-2 border-white">
+                              {item.score.toLocaleString()}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center space-x-1">
+                            <span className="text-xs text-white font-bold">⏱️</span>
+                            <span className={`px-2 py-1 rounded-full font-bold text-xs shadow-lg border-2 border-white ${getDurationStyle(item.duration, item.score)}`}>
+                              {formatDuration(item.duration)}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Level */}
-                    <div className="text-center">
-                      <span className="inline-block bg-gradient-to-r from-blue-400 to-green-400 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-bold shadow-lg border-2 border-white">
-                        {item.level?.nama_level || "?"}
-                      </span>
-                    </div>
+                    {/* Desktop Layout */}
+                    <div className="hidden md:block">
+                      <div className={`grid grid-cols-6 gap-2 md:gap-3 items-center p-3 md:p-4 transition-all duration-300 rounded-xl md:rounded-2xl
+                        ${getRankStyle(index)} 
+                        ${isCurrentPlayer(item) ? 'ring-4 ring-blue-400 bg-gradient-to-r from-blue-100 to-purple-100' : ''}
+                      `}>
+                        {/* Rank */}
+                        <div className="text-center">
+                          <span className="text-xl md:text-2xl font-bold drop-shadow-md">{getRankIcon(index)}</span>
+                          {isCurrentPlayer(item) && (
+                            <div className="text-xs text-blue-600 font-bold mt-1 bg-white px-2 py-1 rounded-full">👈 ANJEUN</div>
+                          )}
+                        </div>
 
-                    {/* Score */}
-                    <div className="text-center">
-                      <span className="inline-block bg-gradient-to-r from-green-400 to-blue-400 text-white px-2 py-1 md:px-3 md:py-2 rounded-full font-bold text-xs md:text-sm shadow-lg border-2 border-white">
-                        {item.score.toLocaleString()}
-                      </span>
-                    </div>
+                        {/* Name */}
+                        <div className="col-span-2">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-xs md:text-sm shadow-lg border-2 border-white">
+                              {(item.LeaderboardSiswa?.username || "?").charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <p className="font-bold text-white text-xs md:text-sm drop-shadow-md">
+                                {item.LeaderboardSiswa?.username || "Teu Aya Ngaran"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
 
-                    {/* Duration */}
-                    <div className="text-center">
-                      <span className={`inline-block px-2 py-1 md:px-3 md:py-1 rounded-full font-bold text-xs shadow-lg border-2 border-white ${getDurationStyle(item.duration, item.score)}`}>
-                        {formatDuration(item.duration)}
-                      </span>
-                      
+                        {/* Level */}
+                        <div className="text-center">
+                          <span className="inline-block bg-gradient-to-r from-blue-400 to-green-400 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-bold shadow-lg border-2 border-white">
+                            {item.level?.nama_level || "?"}
+                          </span>
+                        </div>
+
+                        {/* Score */}
+                        <div className="text-center">
+                          <span className="inline-block bg-gradient-to-r from-green-400 to-blue-400 text-white px-2 py-1 md:px-3 md:py-2 rounded-full font-bold text-xs md:text-sm shadow-lg border-2 border-white">
+                            {item.score.toLocaleString()}
+                          </span>
+                        </div>
+
+                        {/* Duration */}
+                        <div className="text-center">
+                          <span className={`inline-block px-2 py-1 md:px-3 md:py-1 rounded-full font-bold text-xs shadow-lg border-2 border-white ${getDurationStyle(item.duration, item.score)}`}>
+                            {formatDuration(item.duration)}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="p-6 md:p-8 text-center">
-                  <div className="text-5xl md:text-6xl mb-3 animate-bounce">😴</div>
-                  <p className="text-amber-600 text-lg md:text-xl font-bold mb-2">Teu acan aya data jawara</p>
+                <div className="p-4 md:p-8 text-center">
+                  <div className="text-4xl md:text-6xl mb-2 md:mb-3 animate-bounce">😴</div>
+                  <p className="text-amber-600 text-base md:text-xl font-bold mb-2">Teu acan aya data jawara</p>
                   <p className="text-amber-500 text-sm md:text-base">Hayu maén heula sangkan asup kana peringkat!</p>
                 </div>
               )}
@@ -424,105 +477,111 @@ const Leaderboard = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="mb-6">
-            <div className="flex flex-wrap justify-center gap-3">
-          {/* Game Buttons */}
-          {localStorage.getItem("siswaId") && localStorage.getItem("siswaName") && (
-            <>
-              <button
-                onClick={handleBackToGame}
-                className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 border-2 md:border-4 border-yellow-400 rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-400 opacity-20 rounded-2xl md:rounded-3xl"></div>
-                <div className="relative z-10">
-                  <div className="bg-yellow-300 w-12 h-12 md:w-16 md:h-16 rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-2 border-green-600 group-hover:animate-bounce">
-                    <span className="text-2xl md:text-3xl">🎮</span>
+        <div className="mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 md:gap-3">
+            {/* Game Buttons */}
+            {localStorage.getItem("siswaId") && localStorage.getItem("siswaName") && (
+              <>
+                <button
+                  onClick={handleBackToGame}
+                  className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 border-2 md:border-4 border-yellow-400 rounded-xl md:rounded-3xl shadow-xl p-3 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-400 opacity-20 rounded-xl md:rounded-3xl"></div>
+                  <div className="relative z-10 flex items-center justify-center">
+                    <div className="bg-yellow-300 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg border-2 border-green-600 group-hover:animate-bounce mr-3 md:mr-0 md:mx-auto md:mb-3">
+                      <span className="text-xl md:text-3xl">🎮</span>
+                    </div>
+                    <div className="text-left md:text-center">
+                      <h2 className="text-sm md:text-xl font-black mb-1 md:mb-3 text-white drop-shadow-lg">
+                        🌟 MAÉN DEUI 🌟
+                      </h2>
+                      <div className="bg-yellow-200 rounded-lg md:rounded-xl p-1 md:p-3 text-green-800 shadow-lg border-2 border-green-600">
+                        <p className="text-xs md:text-base font-bold">
+                          🎯 Tingkatkeun skor! 🎯
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <h2 className="text-lg md:text-xl font-black mb-2 md:mb-3 text-white drop-shadow-lg">
-                    🌟 MAÉN DEUI 🌟
+                </button>
+
+                <button
+                  onClick={() => navigate("/select-difficulty")}
+                  className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 hover:from-orange-600 hover:via-red-600 hover:to-pink-600 border-2 md:border-4 border-yellow-400 rounded-xl md:rounded-3xl shadow-xl p-3 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-400 opacity-20 rounded-xl md:rounded-3xl"></div>
+                  <div className="relative z-10 flex items-center justify-center">
+                    <div className="bg-yellow-300 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg border-2 border-orange-600 group-hover:animate-bounce mr-3 md:mr-0 md:mx-auto md:mb-3">
+                      <span className="text-xl md:text-3xl">🎯</span>
+                    </div>
+                    <div className="text-left md:text-center">
+                      <h2 className="text-sm md:text-xl font-black mb-1 md:mb-3 text-white drop-shadow-lg">
+                        🎖️ PILIH TINGKATAN 🎖️
+                      </h2>
+                      <div className="bg-yellow-200 rounded-lg md:rounded-xl p-1 md:p-3 text-orange-800 shadow-lg border-2 border-orange-600">
+                        <p className="text-xs md:text-base font-bold">
+                          ⭐ Ganti tingkat! ⭐
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </>
+            )}
+
+            {/* Back to Home Button */}
+            <button
+              onClick={handleBackToHome}
+              className="bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 hover:from-purple-600 hover:via-pink-600 hover:to-red-600 border-2 md:border-4 border-yellow-400 rounded-xl md:rounded-3xl shadow-xl p-3 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 opacity-20 rounded-xl md:rounded-3xl"></div>
+              <div className="relative z-10 flex items-center justify-center">
+                <div className="bg-yellow-300 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg border-2 border-purple-600 group-hover:animate-bounce mr-3 md:mr-0 md:mx-auto md:mb-3">
+                  <span className="text-xl md:text-3xl">🏠</span>
+                </div>
+                <div className="text-left md:text-center">
+                  <h2 className="text-sm md:text-xl font-black mb-1 md:mb-3 text-white drop-shadow-lg">
+                    🌟 KACA UTAMA 🌟
                   </h2>
-                  <div className="bg-yellow-200 rounded-xl p-2 md:p-3 text-green-800 shadow-lg border-2 border-green-600">
-                    <p className="text-sm md:text-base font-bold">
-                      🎯 Tingkatkeun skor! 🎯
+                  <div className="bg-yellow-200 rounded-lg md:rounded-xl p-1 md:p-3 text-purple-800 shadow-lg border-2 border-purple-600">
+                    <p className="text-xs md:text-base font-bold">
+                      🎯 Balik ka beranda! 🎯
                     </p>
                   </div>
                 </div>
-              </button>
-
-              <button
-                onClick={() => navigate("/select-difficulty")}
-                className="bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 hover:from-orange-600 hover:via-red-600 hover:to-pink-600 border-2 md:border-4 border-yellow-400 rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-400 opacity-20 rounded-2xl md:rounded-3xl"></div>
-                <div className="relative z-10">
-                  <div className="bg-yellow-300 w-12 h-12 md:w-16 md:h-16 rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-2 border-orange-600 group-hover:animate-bounce">
-                    <span className="text-2xl md:text-3xl">🎯</span>
-                  </div>
-                  <h2 className="text-lg md:text-xl font-black mb-2 md:mb-3 text-white drop-shadow-lg">
-                    🎖️ PILIH TINGKATAN 🎖️
-                  </h2>
-                  <div className="bg-yellow-200 rounded-xl p-2 md:p-3 text-orange-800 shadow-lg border-2 border-orange-600">
-                    <p className="text-sm md:text-base font-bold">
-                      ⭐ Ganti tingkat! ⭐
-                    </p>
-                  </div>
-                </div>
-              </button>
-            </>
-          )}
-
-          {/* Back to Home Button */}
-          <button
-            onClick={handleBackToHome}
-            className="bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 hover:from-purple-600 hover:via-pink-600 hover:to-red-600 border-2 md:border-4 border-yellow-400 rounded-2xl md:rounded-3xl shadow-xl p-4 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 opacity-20 rounded-2xl md:rounded-3xl"></div>
-            <div className="relative z-10">
-              <div className="bg-yellow-300 w-12 h-12 md:w-16 md:h-16 rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg border-2 border-purple-600 group-hover:animate-bounce">
-                <span className="text-2xl md:text-3xl">🏠</span>
               </div>
-              <h2 className="text-lg md:text-xl font-black mb-2 md:mb-3 text-white drop-shadow-lg">
-                🌟 KACA UTAMA 🌟
-              </h2>
-              <div className="bg-yellow-200 rounded-xl p-2 md:p-3 text-purple-800 shadow-lg border-2 border-purple-600">
-                <p className="text-sm md:text-base font-bold">
-                  🎯 Balik ka beranda! 🎯
-                </p>
-              </div>
-            </div>
-          </button>
+            </button>
           </div>
         </div>
 
         {/* Footer - matching Home style */}
         <div className="relative">
-          <div className="bg-gradient-to-br from-amber-600 to-orange-700 text-white px-4 py-3 md:px-6 md:py-4 rounded-2xl md:rounded-3xl shadow-xl border-2 md:border-4 border-yellow-400 mx-auto max-w-2xl">
-            <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 select-none pointer-events-none">
-              <span className="text-lg md:text-xl">🌟</span>
-              <p className="text-white font-black text-sm md:text-base">
+          <div className="bg-gradient-to-br from-amber-600 to-orange-700 text-white px-3 py-2 md:px-6 md:py-4 rounded-xl md:rounded-3xl shadow-xl border-2 md:border-4 border-yellow-400 mx-auto max-w-2xl">
+            <div className="flex items-center justify-center gap-2 md:gap-3 mb-1 md:mb-2 select-none pointer-events-none">
+              <span className="text-base md:text-xl">🌟</span>
+              <p className="text-white font-black text-xs md:text-base">
                 SELAMAT KEUR SADAYA JAWARA!
               </p>
-              <span className="text-lg md:text-xl">🌟</span>
+              <span className="text-base md:text-xl">🌟</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Moving Background Elements - matching Home */}
-      <div className="fixed bottom-0 left-0 w-full h-16 md:h-20 pointer-events-none">
-        <div className="absolute bottom-0 left-0 w-full h-8 md:h-12 bg-gradient-to-t from-amber-200 to-transparent opacity-40"></div>
-        <div className="absolute bottom-2 left-6 text-lg md:text-xl animate-bounce delay-200">🏆</div>
-        <div className="absolute bottom-4 left-1/4 text-base md:text-lg animate-pulse delay-400">⭐</div>
-        <div className="absolute bottom-1 right-1/3 text-lg md:text-xl animate-bounce delay-600">🎯</div>
-        <div className="absolute bottom-3 right-6 text-base md:text-lg animate-pulse delay-800">🥇</div>
-        <div className="absolute bottom-5 left-1/2 text-base md:text-lg animate-bounce delay-1000">🏅</div>
+      <div className="fixed bottom-0 left-0 w-full h-12 md:h-20 pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-full h-6 md:h-12 bg-gradient-to-t from-amber-200 to-transparent opacity-40"></div>
+        <div className="absolute bottom-1 left-4 md:bottom-2 md:left-6 text-base md:text-xl animate-bounce delay-200">🏆</div>
+        <div className="absolute bottom-2 left-1/4 md:bottom-4 text-sm md:text-lg animate-pulse delay-400">⭐</div>
+        <div className="absolute bottom-0 right-1/3 md:bottom-1 text-base md:text-xl animate-bounce delay-600">🎯</div>
+        <div className="absolute bottom-1 right-4 md:bottom-3 md:right-6 text-sm md:text-lg animate-pulse delay-800">🥇</div>
+        <div className="absolute bottom-2 left-1/2 md:bottom-5 text-sm md:text-lg animate-bounce delay-1000">🏅</div>
       </div>
 
       {/* Corner Ornaments - matching Home */}
-      <div className="absolute top-4 left-4 text-xl md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
-      <div className="absolute top-4 right-4 text-xl md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
-      <div className="absolute bottom-4 left-4 text-xl md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
-      <div className="absolute bottom-4 right-4 text-xl md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
+      <div className="absolute top-2 left-2 md:top-4 md:left-4 text-lg md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
+      <div className="absolute top-2 right-2 md:top-4 md:right-4 text-lg md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
+      <div className="absolute bottom-2 left-2 md:bottom-4 md:left-4 text-lg md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
+      <div className="absolute bottom-2 right-2 md:bottom-4 md:right-4 text-lg md:text-2xl opacity-30 animate-pulse select-none pointer-events-none">🌟</div>
     </div>
   );
 };

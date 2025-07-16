@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:
-    "https://5e18befc-a5ba-4b57-acce-9af020ac60ca-00-1mo04ryoq1rij.sisko.replit.dev/api",
+  baseURL: "https://cardgame-backend-production.up.railway.app/api",
 });
 
 
@@ -14,6 +13,5 @@ const API = axios.create({
 //   return config;
 // });
 
-export const BASE_URL =
-  "https://5e18befc-a5ba-4b57-acce-9af020ac60ca-00-1mo04ryoq1rij.sisko.replit.dev/api";
+export const BASE_URL = "https://cardgame-backend-production.up.railway.app/api";
 export default API;
