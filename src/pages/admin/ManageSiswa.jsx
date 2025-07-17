@@ -298,11 +298,11 @@ const ManageSiswa = () => {
                 
                 <div>
                   <label className="block mb-2 font-medium text-gray-700 pointer-events-none select-none text-sm sm:text-base">
-                    NIS <span className="text-red-500">*</span>
+                    NISN <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="Lebet NIS"
+                    placeholder="Lebet NISN"
                     value={form.nis || ""} // Fallback ke string kosong
                     onChange={(e) => setForm(prev => ({ ...prev, nis: e.target.value }))}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
