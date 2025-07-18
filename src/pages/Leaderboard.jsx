@@ -482,7 +482,7 @@ const Leaderboard = () => {
             {/* Game Buttons */}
             {localStorage.getItem("siswaId") && localStorage.getItem("siswaName") && (
               <>
-                <button
+                {/* <button
                   onClick={handleBackToGame}
                   className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 border-2 md:border-4 border-yellow-400 rounded-xl md:rounded-3xl shadow-xl p-3 md:p-6 hover:scale-105 transform transition-all duration-300 text-white font-bold hover:shadow-2xl group relative overflow-hidden"
                 >
@@ -502,7 +502,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                   </div>
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => navigate("/select-difficulty")}
