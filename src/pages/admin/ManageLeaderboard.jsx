@@ -119,7 +119,7 @@ export default function ManageLeaderboard() {
   if (loading) {
     return (
       <div className="flex min-h-screen bg-gray-100">
-        <Sidebar activePage="kelola-leaderboard" />
+        <Sidebar active="kelola-leaderboard" />
         <div className="flex-1 p-6 flex items-center justify-center">
           <div className="text-center pointer-events-none select-none">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
@@ -193,7 +193,7 @@ export default function ManageLeaderboard() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar activePage="kelola-leaderboard" />
+      <Sidebar active="kelola-leaderboard" />
       <div className="flex-1 p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 gap-4">
           <div className="pointer-events-none select-none">

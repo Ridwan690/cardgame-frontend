@@ -40,9 +40,9 @@ export default function Sidebar({ active }) {
   }, []);
 
   const handleLogout = () => {
-    // Hapus token atawa data login ti localStorage
+ 
     localStorage.removeItem("adminToken");
-    // Redirect ka kaca login
+
     navigate("/");
   };
 
@@ -78,9 +78,9 @@ export default function Sidebar({ active }) {
         >
           <div className="pt-16 md:pt-0 flex flex-col justify-between h-full">
             <div>
-              <h2 className="text-xl font-bold text-blue-700 mb-6">Panel Admin</h2>
+              <h2 className="text-xl font-bold text-blue-700 mb-6 select-none">Panel Admin</h2>
 
-              <nav className="space-y-2">
+              <nav className="space-y-2 select-none">
                 <Link to="/admin/dashboard" className={navClass("dashboard")} onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
                   📊 Dasbor
                 </Link>
@@ -96,7 +96,7 @@ export default function Sidebar({ active }) {
                 <Link to="/admin/manage-siswa" className={navClass("kelola-siswa")} onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
                   🧑‍🎓 Ngatur Murid
                 </Link>
-                <Link to="/admin-register" className={navClass("admin-register")} onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
+                <Link to="/admin-register" className={navClass("create-admin")} onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
                   👤 Tambah Admin
                 </Link>
               </nav>

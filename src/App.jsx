@@ -35,7 +35,6 @@ function App() {
           <Route path="/admin/manage-leaderboard" element={<ManageLeaderboard />} />
           <Route path="/admin/manage-siswa" element={<ManageSiswa />} />
           
-          {/* Catch-all route */}
         </Routes>
       </Router>
     </AudioProvider>

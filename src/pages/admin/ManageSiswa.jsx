@@ -205,7 +205,7 @@ const ManageSiswa = () => {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
-      <Sidebar activePage="kelola-siswa" />
+      <Sidebar active="kelola-siswa" />
       
       <div className="flex-1 p-3 sm:p-4 lg:p-6">
         {/* Header */}
