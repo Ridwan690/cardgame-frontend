@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../../api";
 import Sidebar from "../../components/admin/Sidebar";
+import Modal from "../../components/Modal";
 
 const ManageSiswa = () => {
   const [siswaList, setSiswaList] = useState([]);
@@ -9,7 +10,7 @@ const ManageSiswa = () => {
   const [error, setError] = useState(null);
   const [actionLoading, setActionLoading] = useState(null);
   const [editId, setEditId] = useState(null);
-  const [showForm, setShowForm] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [selectedSiswaId, setSelectedSiswaId] = useState(null);
@@ -43,13 +44,12 @@ const ManageSiswa = () => {
       kelas: typeof form.kelas
     });
     
-    // Validasi form dengan pengecekan yang lebih aman
+    // Validasi form
     if (!form.username || !form.nis || !form.kelas) {
       alert("Sadaya kolom kedah dieusian!");
       return;
     }
 
-    // Pastikan semua field adalah string sebelum memanggil trim()
     const username = (form.username || '').toString().trim();
     const nis = (form.nis || '').toString().trim();
     const kelas = (form.kelas || '').toString().trim();
@@ -87,7 +87,7 @@ const ManageSiswa = () => {
 
       await fetchSiswa();
       setForm({ username: "", nis: "", kelas: "" });
-      setShowForm(false);
+      setIsModalOpen(false); 
     } catch (err) {
       console.error("Gagal nyimpen data siswa", err);
       if (err.response?.data?.message) {
@@ -101,29 +101,28 @@ const ManageSiswa = () => {
   };
 
   const handleEdit = (siswa) => {
-    console.log("Data siswa yang akan diedit:", siswa); // Debug log
+    console.log("Data siswa yang akan diedit:", siswa);
     
     setEditId(siswa.id_siswa);
     setForm({
-      username: siswa.username || "", // Fallback ke string kosong
+      username: siswa.username || "",
       nis: siswa.nis || "",
       kelas: siswa.kelas || ""
     });
     
-    // Debug log untuk melihat form state
     console.log("Form state setelah set:", {
       username: siswa.username,
       nis: siswa.nis,
       kelas: siswa.kelas
     });
     
-    setShowForm(true);
+    setIsModalOpen(true); 
   };
 
   const handleCancelEdit = () => {
     setEditId(null);
     setForm({ username: "", nis: "", kelas: "" });
-    setShowForm(false);
+    setIsModalOpen(false);
   };
 
   const handleDelete = (id) => {
@@ -216,7 +215,7 @@ const ManageSiswa = () => {
           </div>
           <div className="flex gap-2 w-full sm:w-auto">
             <button
-              onClick={() => setShowForm(!showForm)}
+              onClick={() => setIsModalOpen(true)}
               className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 text-sm sm:text-base"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,102 +254,6 @@ const ManageSiswa = () => {
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
-          </div>
-        )}
-
-        {/* Form - Only show on desktop or when mobile form is toggled */}
-        {(showForm || window.innerWidth >= 1024) && (
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-4 lg:mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2 pointer-events-none select-none">
-                <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                <h2 className="text-base sm:text-lg font-semibold text-gray-800">
-                  {editId ? "Édit Data Siswa" : "Tambah Data Siswa"}
-                </h2>
-              </div>
-              <button
-                onClick={() => setShowForm(false)}
-                className="lg:hidden text-gray-500 hover:text-gray-700"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700 pointer-events-none select-none text-sm sm:text-base">
-                    Nami <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Lebet nami siswa"
-                    value={form.username || ""} // Fallback ke string kosong
-                    onChange={(e) => setForm(prev => ({ ...prev, username: e.target.value }))}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700 pointer-events-none select-none text-sm sm:text-base">
-                    NISN <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Lebet NISN"
-                    value={form.nis || ""} // Fallback ke string kosong
-                    onChange={(e) => setForm(prev => ({ ...prev, nis: e.target.value }))}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                    required
-                  />
-                </div>
-                
-                <div className="sm:col-span-2 lg:col-span-1">
-                  <label className="block mb-2 font-medium text-gray-700 pointer-events-none select-none text-sm sm:text-base">
-                    Kelas <span className="text-red-500">*</span>
-                  </label>
-                    <input
-                      type="text"
-                      placeholder="Lebet kelas"
-                      value={form.kelas || ""} // Fallback ke string kosong
-                      onChange={(e) => setForm(prev => ({ ...prev, kelas: e.target.value }))}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                      required
-                    />
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                {editId && (
-                  <button
-                    type="button"
-                    onClick={handleCancelEdit}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base"
-                  >
-                    Batal
-                  </button>
-                )}
-                <button
-                  type="submit"
-                  disabled={actionLoading === 'submit'}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
-                >
-                  {actionLoading === 'submit' ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                    </svg>
-                  )}
-                  {editId ? "Robah" : "Tambah"}
-                </button>
-              </div>
-            </form>
           </div>
         )}
 
@@ -430,7 +333,7 @@ const ManageSiswa = () => {
           </div>
 
           {/* Desktop Table View */}
-          <div className="hidden sm:block overflow-x-auto overflow-y-auto max-h-96">
+          <div className="hidden sm:block overflow-x-auto overflow-y-auto max-h-130">
             <table className="w-full">
               <thead className="bg-blue-50 sticky top-0 z-10 pointer-events-none select-none">
                 <tr>
@@ -509,6 +412,90 @@ const ManageSiswa = () => {
           </div>
         </div>
       </div>
+      {/* Form Modal */}
+      {isModalOpen && (
+        <Modal 
+          onClose={() => setIsModalOpen(false)}
+          title={editId ? "Édit Data Siswa" : "Tambah Data Siswa"}
+          size="md"
+        >
+          <div className="p-4 sm:p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="sm:col-span-2">
+                  <label className="block mb-2 font-medium text-gray-700 text-sm sm:text-base">
+                    Nami <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.username || ""}
+                    onChange={(e) => setForm(prev => ({ ...prev, username: e.target.value }))}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                    placeholder="Lebet nami siswa"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700 text-sm sm:text-base">
+                    NISN <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.nis || ""}
+                    onChange={(e) => setForm(prev => ({ ...prev, nis: e.target.value }))}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                    placeholder="Lebet NISN"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700 text-sm sm:text-base">
+                    Kelas <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={form.kelas || ""}
+                    onChange={(e) => setForm(prev => ({ ...prev, kelas: e.target.value }))}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                    placeholder="Lebet kelas"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={actionLoading}
+                  className="flex-1 bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300 text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm sm:text-base"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={actionLoading === 'submit'}
+                  className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center text-sm sm:text-base"
+                >
+                  {actionLoading === 'submit' ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                      </svg>
+                      {editId ? "Robah" : "Simpen"}
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+      )}
+
       {/* Delete Confirmation Modal */}
       {showDeleteModal && <DeleteModal />}
     </div>
