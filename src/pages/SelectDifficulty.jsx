@@ -13,6 +13,7 @@ const SelectDifficulty = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [bounceAnimation, setBounceAnimation] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
 
   // Animasi bounce saat component dimuat
@@ -52,11 +53,12 @@ const SelectDifficulty = () => {
     }
   }, [searchTerm]);
 
-  // Setelah memilih siswa, ambil level yang sudah diselesaikan dan skornya
+  // ambil level yang sudah diselesaikan dan skornya
   useEffect(() => {
     const fetchCompleted = async () => {
       if (selectedSiswa) {
         try {
+          const timestamp = new Date().getTime();
           const res = await API.get(`/activity?siswaId=${selectedSiswa.id_siswa}`);
           const levelsDone = res.data.map(item => item.id_level);
           
@@ -79,6 +81,20 @@ const SelectDifficulty = () => {
       }
     };
     fetchCompleted();
+  }, [selectedSiswa, refreshKey]);
+
+  useEffect(() => {
+    if (!selectedSiswa) return;
+
+    const interval = setInterval(() => {
+      console.log("Auto refreshing progress data...");
+      setRefreshKey(prev => prev + 1);
+    }, 15000);
+
+    return () => {
+      clearInterval(interval);
+      console.log("Auto refresh interval cleared")
+    };
   }, [selectedSiswa]);
 
   useEffect(() => {
