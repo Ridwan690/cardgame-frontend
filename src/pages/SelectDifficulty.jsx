@@ -58,30 +58,96 @@ const SelectDifficulty = () => {
     const fetchCompleted = async () => {
       if (selectedSiswa) {
         try {
-          const timestamp = new Date().getTime();
-          const res = await API.get(`/activity?siswaId=${selectedSiswa.id_siswa}`);
-          const levelsDone = res.data.map(item => item.id_level);
-          
-          // Membuat mapping skor untuk setiap level
-          const scoresMap = {};
-          res.data.forEach(item => {
-            if (!scoresMap[item.id_level] || item.score > scoresMap[item.id_level]) {
-              scoresMap[item.id_level] = item.score;
-            }
-          });
 
-          
-          setCompletedLevels(levelsDone);
-          setLevelScores(scoresMap);
+          setCompletedLevels([]);
+          setLevelScores({});
+          setLoading(true);
+
+          const timestamp = new Date().getTime();
+          console.log(`Fetching progress for siswa ID: ${selectedSiswa.id_siswa}`);
+
+          const res = await API.get(`/activity?siswaId=${selectedSiswa.id_siswa}&t=${timestamp}`);
+
+          console.log('API Response:', res.data);
+          console.log('Response length:', res.data?.length || 0);
+
+
+          if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+            const levelsDone = res.data.map(item => item.id_level);
+            
+            // Membuat mapping skor untuk setiap level
+            const scoresMap = {};
+            res.data.forEach(item => {
+              if (!scoresMap[item.id_level] || item.score > scoresMap[item.id_level]) {
+                scoresMap[item.id_level] = item.score;
+              }
+            });
+            
+            console.log('Completed levels:', levelsDone);
+            console.log('Level scores:', scoresMap);
+            
+            setCompletedLevels(levelsDone);
+            setLevelScores(scoresMap);
+          } else {
+            // Jika response kosong, pastikan state kosong
+            console.log('No activities found for this student');
+            setCompletedLevels([]);
+            setLevelScores({});
+          }
         } catch (error) {
           console.error("Gagal memuat data progress siswa:", error);
           setCompletedLevels([]);
           setLevelScores({});
+        } finally {
+          setLoading(false);
         }
+      } else {
+        // Jika tidak ada siswa terpilih, clear semua data
+        console.log('No student selected, clearing progress data');
+        setCompletedLevels([]);
+        setLevelScores({});
       }
     };
     fetchCompleted();
   }, [selectedSiswa, refreshKey]);
+
+  const validateSelectedSiswa = async () => {
+    if (selectedSiswa) {
+      try {
+        // Cek apakah siswa masih ada di database
+        const res = await API.get(`/siswa/search?query=${selectedSiswa.nis}`);
+        const siswaExists = res.data.find(s => s.id_siswa === selectedSiswa.id_siswa);
+        
+        if (!siswaExists) {
+          // Siswa sudah dihapus, clear data
+          console.log("Siswa sudah dihapus dari database, clearing data...");
+          localStorage.removeItem("siswaId");
+          localStorage.removeItem("siswaName");
+          localStorage.removeItem("siswaNIS");
+          localStorage.removeItem("siswaKelas");
+          setSelectedSiswa(null);
+          setCompletedLevels([]);
+          setLevelScores({});
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error("Error validating siswa:", error);
+      }
+    }
+  };
+
+  // Panggil validasi saat auto refresh
+  useEffect(() => {
+    if (!selectedSiswa) return;
+    
+    const interval = setInterval(() => {
+      console.log("Auto refreshing and validating...");
+      validateSelectedSiswa(); // Validasi siswa dulu
+      setRefreshKey(prev => prev + 1); // Lalu refresh progress
+    }, 15000);
+    
+    return () => clearInterval(interval);
+  }, [selectedSiswa]);
 
   useEffect(() => {
     if (!selectedSiswa) return;
@@ -104,6 +170,12 @@ const SelectDifficulty = () => {
     const savedSiswaKelas = localStorage.getItem("siswaKelas");
     
     if (savedSiswaId && savedSiswaName && savedSiswaNIS && savedSiswaKelas) {
+      console.log('Loading saved student from localStorage:', savedSiswaId);
+      
+      // Clear state 
+      setCompletedLevels([]);
+      setLevelScores({})
+
       setSelectedSiswa({
         id_siswa: savedSiswaId,
         username: savedSiswaName,
@@ -111,6 +183,11 @@ const SelectDifficulty = () => {
         kelas: savedSiswaKelas
       });
       setShowModal(false);
+    } else {
+      console.log('No saved student found');
+      setSelectedSiswa(null);
+      setCompletedLevels([]);
+      setLevelScores({});
     }
   }, []);
 
@@ -187,20 +264,20 @@ const SelectDifficulty = () => {
 
   // Handle pemilihan siswa
   const handleSelectSiswa = (siswa) => {
+    console.log('Selecting new student:', siswa);
+    
+    // Clear state lama dulu
+    setCompletedLevels([]);
+    setLevelScores({});
+    setLoading(false);
+    
+    // Set siswa baru
     setSelectedSiswa(siswa);
     setSearchTerm("");
     setSiswaList([]);
     setShowModal(false);
     
-    // Simpan data siswa ke localStorage
-    localStorage.setItem("siswaId", siswa.id_siswa);
-    localStorage.setItem("siswaName", siswa.username);
-    localStorage.setItem("siswaNIS", siswa.nis);
-    localStorage.setItem("siswaKelas", siswa.kelas);
-  };
-
-  const handleBackToHome = () => {
-    // Clear localStorage sebelum navigasi ke beranda
+    // Clear localStorage lama
     localStorage.removeItem("siswaId");
     localStorage.removeItem("siswaName");
     localStorage.removeItem("siswaNIS");
@@ -208,7 +285,32 @@ const SelectDifficulty = () => {
     localStorage.removeItem("justCompletedGame");
     localStorage.removeItem("lastGameScore");
     
-    // Navigasi ke beranda
+    // Set localStorage baru
+    localStorage.setItem("siswaId", siswa.id_siswa);
+    localStorage.setItem("siswaName", siswa.username);
+    localStorage.setItem("siswaNIS", siswa.nis);
+    localStorage.setItem("siswaKelas", siswa.kelas);
+  };
+
+  const handleBackToHome = () => {
+    console.log('Going back to home, clearing all data');
+    
+    // Clear semua state
+    setSelectedSiswa(null);
+    setCompletedLevels([]);
+    setLevelScores({});
+    setSearchTerm("");
+    setSiswaList([]);
+    setLoading(false);
+    
+    // Clear localStorage
+    localStorage.removeItem("siswaId");
+    localStorage.removeItem("siswaName");
+    localStorage.removeItem("siswaNIS");
+    localStorage.removeItem("siswaKelas");
+    localStorage.removeItem("justCompletedGame");
+    localStorage.removeItem("lastGameScore");
+    
     navigate("/");
   };
 
@@ -287,6 +389,15 @@ const SelectDifficulty = () => {
                   NIS: <span className="text-orange-800">{selectedSiswa.nis}</span> | 
                   Kelas: <span className="text-orange-800">{selectedSiswa.kelas}</span>
                 </p>
+              </div>
+            </div>
+          )}
+
+          {loading && selectedSiswa && (
+            <div className="mb-4 text-center">
+              <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg inline-block font-bold">
+                <span className="animate-spin inline-block mr-2">⏳</span>
+                Ngamuat data progress...
               </div>
             </div>
           )}

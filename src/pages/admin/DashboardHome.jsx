@@ -25,7 +25,7 @@ export default function DashboardHome() {
         API.get("/words"),
         API.get("/siswa"),
         API.get("/leaderboard"),
-        API.get("/activity"),
+        API.get("/recent-activities"),
       ]);
 
       setTotalKosakata(wordsRes.data.length);
