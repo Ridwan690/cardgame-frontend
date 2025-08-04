@@ -63,7 +63,7 @@ export default function CreateAdmin() {
       setLoading(true);
       setError(null);
 
-      const response = await API.post("/admin/create", {
+      const response = await API.post("/admin/register", {
         username: formData.username.trim(),
         password: formData.password,
       });
